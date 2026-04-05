@@ -13,7 +13,7 @@ if vim.g.neovide then
     vim.keymap.set("n", "<F11>", function()
         vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
     end, { desc = "Toggle Neovide Fullscreen" })
-    vim.o.guifont = "Terminess Nerd Font Mono,Segoe UI Emoji:h18:b"
+    vim.o.guifont = "Terminess Nerd Font Mono,Segoe UI Emoji:h14:b"
 end
 
 vim.opt.wrap = false
@@ -33,9 +33,6 @@ vim.opt.fillchars = { eob = ' ' }
 vim.opt.signcolumn = "yes"
 vim.opt.splitright = true
 vim.opt.autochdir = true
-
--- Drop Neovim's idle timer from 4000ms down to a snappy 250ms
-vim.opt.updatetime = 250
 
 -- Force matching brackets to have a bright blue background and bold white text
 vim.api.nvim_set_hl(0, "MatchParen", { bg = "#0055ff", fg = "#ffffff", bold = true })
@@ -64,11 +61,6 @@ vim.api.nvim_set_hl(0, 'CmpItemKindStruct', { fg = '#ECCD6F' }) -- Structs!
 
 -- Green for Strings & Snippets
 vim.api.nvim_set_hl(0, 'CmpItemKindSnippet', { fg = '#D4D4D4' }) -- Or '#4EC9B0' for green
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { '<filetype>' },
-  callback = function() vim.treesitter.start() end,
-})
 
 -- Treesitter settings
 vim.api.nvim_create_autocmd('FileType', {

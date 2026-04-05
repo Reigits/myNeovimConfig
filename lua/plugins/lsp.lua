@@ -13,6 +13,20 @@ return {
           function(server_name)
             require("lspconfig")[server_name].setup({})
           end,
+
+    -- 2. The Clangd "Silver Bullet"
+          ["clangd"] = function()
+              require("lspconfig").clangd.setup({
+                  cmd = {
+                        "clangd",
+                          "--background-index",
+                          "--clang-tidy",
+                          "--header-insertion=iwyu",
+                          -- Pointing clangd directly to your new GCC engine
+                          "--query-driver=C:/msys64/ucrt64/bin/*",
+                  }
+              })
+          end,
         }
       })
     end,

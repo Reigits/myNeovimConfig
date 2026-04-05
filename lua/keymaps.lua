@@ -28,6 +28,9 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 -- Help Tags: Search Neovim documentation (Crucial for learning!)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
+-- THE NEW INLINE RENAME HOTKEY: Press Space + r
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Code Rename (LSP)" })
+
 
 -- ==========================================================
 -- 2. POWER USER TOOLS (Very useful)
@@ -56,7 +59,7 @@ vim.keymap.set('n', '[d', function()
     vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Prev Diagnostic" })
 
-vim.keymap.set('n', '<leader>r', function()
+vim.keymap.set('n', '<leader>c', function()
   vim.cmd("w")
 
   -- USE %:t TO FORCE ONLY THE FILENAME
@@ -68,9 +71,9 @@ vim.keymap.set('n', '<leader>r', function()
   local cmd = ""
 
   if ext == "c" then
-    -- Result: clang "test.c" -o "test.exe" && "test.exe"
+    -- Result: gcc "test.c" -o "test.exe" && "test.exe"
     local binary = file_no_ext .. ".exe"
-    cmd = "clang \"" .. file .. "\" -o \"" .. binary .. "\" && \"" .. binary .. "\""
+    cmd = "gcc \"" .. file .. "\" -o \"" .. binary .. "\" && \"" .. binary .. "\""
   elseif ext == "py" then
     -- Result: python "main.py"
     cmd = "python \"" .. file .. "\""
