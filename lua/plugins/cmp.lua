@@ -6,48 +6,76 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
     },
-    config = function()
+    -- THE UPGRADE: Using opts as a function instead of config
+    opts = function()
         local cmp = require("cmp")
 
-        cmp.setup({
-            -- 1. WINDOW: Force rounded border & Disable Docs
+        local kind_icons = {
+            Text = "󰉿", Method = "󰆧", Function = "󰊕", Constructor = "",
+            Field = "󰜢", Variable = "󰀫", Class = "󰠱", Interface = "",
+            Module = "", Property = "󰜢", Unit = "󰑭", Value = "󰎠",
+            Enum = "", Keyword = "󰌋", Snippet = "", Color = "󰏘",
+            File = "󰈙", Reference = "󰈇", Folder = "󰉋", EnumMember = "",
+            Constant = "󰏿", Struct = "󰙅", Event = "", Operator = "󰆕",
+            TypeParameter = "󰊄",
+        }
+
+        -- Notice we don't call cmp.setup() anymore. 
+        -- We just return the table directly to Lazy!
+        return {
+
+            enabled = function()
+                local context = require('cmp.config.context')
+                return not context.in_treesitter_capture("string") and not context.in_treesitter_capture("String") and not context.in_treesitter_capture("comment") and not context.in_treesitter_capture("Comment")
+            end,
+
+            snippet = {
+                expand = function(args)
+                    vim.snippet.expand(args.body)
+                end,
+            },
+
             window = {
                 completion = {
                     border = "rounded",
-                    -- This ensures the border uses your default text color (Fixes invisible border)
                     winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
                     scrollbar = false,
                 },
-                documentation = cmp.config.disable, -- This hides the detail window
+                documentation = cmp.config.disable, 
             },
 
-            -- 2. FORMATTING: Clean up the list (Word + Type only)
             formatting = {
-                fields = { "abbr", "kind" },
-                format = function(_, vim_item)
-                    vim_item.menu = "" -- Removes extra labels like [LSP] or [Buffer]
-                    vim_item.abbr = vim_item.abbr:match("[^(]+")
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, vim_item)
+                    vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+                    vim_item.menu = ({
+                        nvim_lsp = "[LSP]",
+                        buffer = "[Buffer]",
+                        path = "[Path]",
+                    })[entry.source.name]
                     return vim_item
                 end,
             },
 
-            -- 3. MAPPINGS: Standard navigation
             mapping = cmp.mapping.preset.insert({
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                ["<CR>"] = cmp.mapping.confirm({ select = false }),
                 ["<Tab>"] = cmp.mapping.select_next_item(),
                 ["<S-Tab>"] = cmp.mapping.select_prev_item(),
             }),
 
-            -- 4. SOURCES: Where the code comes from
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
                 { name = "buffer"},
                 { name = "path" },
             }),
-        })
+
+            experimental = {
+                ghost_text = true,
+            },
+        }
     end,
 }

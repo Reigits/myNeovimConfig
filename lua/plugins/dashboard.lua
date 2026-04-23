@@ -14,10 +14,10 @@ return {
 
    ▄   ▄███▄   ████▄     ▄   ▄█ █▀▄▀█
     █  █▀   ▀  █   █      █  ██ █ █ █
-██   █ ██▄▄    █   █ █     █ ██ █ ▄ █
+██   █ ██▄▄    █   █ █     █ ██ █   █
 █ █  █ █▄   ▄▀ ▀████  █    █ ▐█ █   █
 █  █ █ ▀███▀           █  █   ▐    █ 
-█   ██                  █▐        ▀  
+█   ██                  ██        ▀  
                         ▐            
 
 
@@ -50,9 +50,15 @@ return {
         },
         {
           action = 'Mason',
-          desc = ' Manage LSPs',
+          desc = ' Manage LSP',
           icon = '󱧕 ',
           key = 'M',
+        },
+        {
+          action = 'restart',
+          desc = ' Restart',
+          icon = ' ', -- Standard reboot/sync icon
+          key = 'R',   -- Capital R so it doesn't conflict with 'r' (Recent files)
         },
         {
           action = 'qa',
@@ -65,8 +71,6 @@ return {
         local stats = require("lazy").stats()
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
         return { "",
-                "",
-                "",
                 "",
                 "",
                 "",

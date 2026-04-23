@@ -5,7 +5,14 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to right window' })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save the file'})
 -- Maps <leader>q (Space + q) to wipe the desk and return to the dashboard
-vim.keymap.set('n', '<leader>q', '<cmd>Neotree close<CR><cmd>enew<CR><cmd>Dashboard<CR>', { desc = 'Quit to Dashboard' })
+-- vim.keymap.set('n', '<leader>q', '<cmd>Neotree close<CR><cmd>enew<CR><cmd>Dashboard<CR>', { desc = 'Quit to Dashboard' })
+vim.keymap.set('n', '<leader>q', function()
+    vim.cmd("Neotree close")
+    -- The Fix: The '!' forces all buffers to die immediately, 
+    -- even if they have unsaved typing.
+    vim.cmd("%bd!")
+    vim.cmd("Dashboard")
+end, { desc = 'Force Close & Go to Dashboard', noremap = true, silent = true })
 
 -- The ultimate Home Row escape trick
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })

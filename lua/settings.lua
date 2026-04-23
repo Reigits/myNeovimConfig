@@ -13,7 +13,7 @@ if vim.g.neovide then
     vim.keymap.set("n", "<F11>", function()
         vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
     end, { desc = "Toggle Neovide Fullscreen" })
-    vim.o.guifont = "Terminess Nerd Font Mono,Segoe UI Emoji:h14:b"
+    vim.o.guifont = "Terminess Nerd Font Mono,Segoe UI Emoji:h18:b"
 end
 
 vim.opt.wrap = false
