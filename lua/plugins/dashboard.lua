@@ -24,7 +24,7 @@ return {
 
             ]], '\n'),
         center = {{
-          action = 'enew | cd C:/Users/Rei/Documents/neovimCode | Neotree reveal', -- replace with your own code directory!
+          action = 'enew | cd ~/Documents/neovim_code | Neotree reveal', -- replace with your own code directory!
           desc = ' Code Workspace',
           icon = ' ',
           key = 'w',
