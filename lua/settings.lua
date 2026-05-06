@@ -1,21 +1,3 @@
--- NEODVIDE CONFIGURATION
-if vim.g.neovide then
-
-    -- 2. Animation Settings
-    vim.g.neovide_cursor_animation_length = 0.13 -- Smoothness (0 = instant, 1 = slow)
-    vim.g.neovide_scroll_animation_length = 0.3  -- Smooth scrolling
-
-    -- 3. The "Gamer" Effects
-    vim.g.neovide_cursor_trail_size = 0.8
-
-    vim.g.neovide_scale_factor = 0.8
-    vim.g.neovide_fullscreen = true
-    vim.keymap.set("n", "<F11>", function()
-        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
-    end, { desc = "Toggle Neovide Fullscreen" })
-    vim.o.guifont = "Terminess Nerd Font Mono,Segoe UI Emoji:h18:b"
-end
-
 vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.cursorline = true
